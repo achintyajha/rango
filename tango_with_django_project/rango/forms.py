@@ -10,7 +10,7 @@ class CategoryForm(forms.ModelForm):
 
     class Meta:
         model = Category
-        fields = ('name')
+        fields = ('name',)
 
 class PageForm(forms.ModelForm):
     name = forms.CharField(max_length=128, help_text="Enter the title of the page.")
@@ -19,4 +19,20 @@ class PageForm(forms.ModelForm):
 
     class Meta:
         model = Page
+        # we can either exclude the category field from the form,
         exclude = ('category',)
+        # or specify the fields to include (i.e. not include the category field)
+        # fields = ('title', 'url', 'views')
+
+    def clean(self):
+        cleaned_data = self.cleaned_data
+        url = cleaned_data.get('url')
+
+        # If url is not empty and doesn't start with 'http://',
+        # then prepend 'http://'.
+        if url and not url.startswith('http://'):
+            url = 'http://' + url
+            cleaned_data['url'] = url
+            return cleaned_data
+
+        

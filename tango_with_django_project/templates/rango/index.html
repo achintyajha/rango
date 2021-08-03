@@ -13,6 +13,7 @@
 
     <div>
       {% if categories %}
+      <h2>Most Liked Categories</h2>
       <ul>
         {% for category in categories %}
           <!-- Following line changed to add an HTML hyperlink -->
@@ -23,6 +24,24 @@
       </ul>
       {% else %}
         <strong>There are no categories present.</strong>
+      {% endif %}
+    </div>
+
+    <p>================================================================</p>
+    
+    <div>
+      {% if pages %}
+      <h2>Most Viewed Pages</h2>
+      <ul>
+        {% for page in pages %}
+          <!-- Following line changed to add an HTML hyperlink -->
+          <li>
+            <a href="{{ page.url }}">{{ page.title }}</a>
+          </li>
+        {% endfor %}
+      </ul>
+      {% else %}
+        <strong>There is no such page present.</strong>
       {% endif %}
     </div>
 

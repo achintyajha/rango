@@ -1,19 +1,17 @@
-<!DOCTYPE html>
+{% extends 'rango/base.html' %}
 {% load static %}
-<html>
-  <head>
-    <title>About</title>
-  </head>
-  <body>
+
+{% block title_block %}
+    Add Category
+{% endblock %}  
+
+{% block body_block %}
     <h1>Rango says here is the about page.</h1>
     <div>
       This tutorial has been put together by Achintya Jha.<br />
       <strong>{{ boldmessage }}</strong><br />
     </div>
     <div>
-      <a href="/rango/">Index</a>
-      <br />
       <img src="{% static "images/image.gif" %}" alt="Stupid GIF">
     </div>
-  </body>
-</html>
+{% endblock %}

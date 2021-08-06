@@ -1,5 +1,5 @@
 from rango.forms import PageForm
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from django.http import HttpResponse
 
@@ -8,6 +8,8 @@ from rango.models import Category, Page
 from rango.forms import CategoryForm, PageForm
 
 from datetime import datetime
+
+from django.urls import reverse
 
 def index(request):
     request.session.set_test_cookie()
@@ -88,16 +90,25 @@ def add_page(request, category_name_slug):
     except Category.DoesNotExist:
         category = None
     
+    # You cannot add a page to a Category that does not exist...
+    if category is None:
+        return redirect('/rango/')
+    
     form = PageForm()
+
     if request.method == 'POST':
         form = PageForm(request.POST)
+
         if form.is_valid():
             if category:
                 page = form.save(commit=False)
                 page.category = category
                 page.views = 0
                 page.save()
-                return show_category(request, category_name_slug)
+
+                return redirect(reverse('rango:show_category',
+                                        kwargs={'category_name_slug':
+                                                category_name_slug}))
         else:
             print(form.errors)
         

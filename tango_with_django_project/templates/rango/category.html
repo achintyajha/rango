@@ -1,9 +1,12 @@
 {% extends 'rango/base.html' %}
-<!-- 'extends' URL relative to templates directory -->
 {% load static %}
 
 {% block title_block %}
-    Categories
+    {% if category %}
+        {{ category.name }}
+        {% else %}
+        Unknown Category
+    {% endif %}
 {% endblock %}
 
 {% block body_block %}
@@ -19,7 +22,7 @@
         {% else %}
             <strong>No pages currently in category.</strong>
         {% endif %}
-        <a href="{% url 'add_page' category.slug %}">Add a Page</a>
+        <a href="{% url 'rango:add_page' category.slug %}">Add a Page</a>
         <!-- the category.slug is passed through as a parameter to the url template tag -->
     {% else %}
         The specified category does not exist!
